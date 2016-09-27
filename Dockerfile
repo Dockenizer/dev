@@ -2,7 +2,7 @@ FROM dockenizer/php-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
 RUN apk --update \
-        add mysql-client nano htop supervisor sudo nodejs git openssh-client && \
+        add mysql-client nano htop supervisor sudo nodejs git openssh && \
 
     mkdir /etc/supervisor.d/ && \
     echo "www-data ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo) && \
