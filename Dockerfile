@@ -26,4 +26,9 @@ VOLUME /etc/supervisor.d
 
 WORKDIR /var/www
 
+
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD /run.sh
