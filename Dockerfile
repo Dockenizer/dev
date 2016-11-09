@@ -28,7 +28,10 @@ WORKDIR /var/www
 
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY docker-root-entrypoint.sh /docker-root-entrypoint.sh
+
 RUN chmod +x /docker-entrypoint.sh
+RUN chmod +x /docker-root-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD /run.sh
