@@ -1,4 +1,4 @@
-FROM dockenizer/php-fpm
+FROM dockenizer/php7-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
 RUN apk --update \
