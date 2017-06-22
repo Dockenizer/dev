@@ -2,36 +2,36 @@ FROM dockenizer/php7-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
 RUN apk --update \
-        add mysql-client nano htop supervisor sudo nodejs git openssh && \
+        add mysql-client nano htop supervisor sudo nodejs git openssh zsh && \
 
     mkdir /etc/supervisor.d/ && \
     echo "www-data ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo) && \
 
     rm -rf /var/cache/apk/*
 
-RUN wget http://get.sensiolabs.org/php-cs-fixer.phar -O /usr/local/bin/php-cs-fixer && \
-    chmod +x /usr/local/bin/php-cs-fixer
-
 RUN cd /tmp && \
     php -r "readfile('https://getcomposer.org/installer');" | php && \
     mv composer.phar /usr/local/bin/composer
 
-ADD squire /usr/local/bin/squire
+USER www-data
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"; exit 0
+USER root
 
-ADD run.sh /run.sh
-RUN chmod +x /run.sh
+ADD squire /usr/local/bin/squire
 
 VOLUME /var/www
 VOLUME /etc/supervisor.d
 
-WORKDIR /var/www
-
+WORKDIR /home/www-data
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
 COPY docker-root-entrypoint.sh /docker-root-entrypoint.sh
 
 RUN chmod +x /docker-entrypoint.sh
 RUN chmod +x /docker-root-entrypoint.sh
+
+ADD run.sh /run.sh
+RUN chmod +x /run.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD /run.sh
