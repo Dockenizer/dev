@@ -1,8 +1,11 @@
 FROM dockenizer/php7-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
-RUN apk --update \
-        add mysql-client nano htop supervisor sudo nodejs git openssh zsh && \
+RUN apk --update add mysql-client make g++ autoconf nano htop supervisor sudo nodejs git openssh zsh && \
+    pecl install xdebug && \
+
+    apk del --purge make g++ autoconf libtool && \
+    rm -rf /var/cache/apk/* && \
 
     mkdir /etc/supervisor.d/ && \
     echo "www-data ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo) && \
