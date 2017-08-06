@@ -1,7 +1,9 @@
 FROM dockenizer/php7-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
-RUN apk --update add mysql-client make g++ autoconf nano htop supervisor sudo nodejs git openssh zsh && \
+RUN apk --update \
+        --repository http://dl-3.alpinelinux.org/alpine/edge/community/ \
+        add mysql-client make g++ autoconf nano htop supervisor sudo nodejs git openssh zsh make redis yarn jpegoptim && \
     pecl install xdebug && \
 
     apk del --purge make g++ autoconf libtool && \
