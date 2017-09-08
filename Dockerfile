@@ -2,15 +2,14 @@ FROM dockenizer/php7-fpm
 MAINTAINER Jacques Moati <jacques@moati.net>
 
 RUN apk --update \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.6/main/ \
+        --repository http://dl-3.alpinelinux.org/alpine/v3.6/community/ \
         add mysql-client make g++ autoconf nano htop supervisor sudo nodejs git openssh zsh make redis yarn && \
     pecl install xdebug && \
-
     apk del --purge make g++ autoconf libtool && \
     rm -rf /var/cache/apk/* && \
-
     mkdir /etc/supervisor.d/ && \
     echo "www-data ALL=(ALL:ALL) NOPASSWD: ALL" | (EDITOR="tee -a" visudo) && \
-
     rm -rf /var/cache/apk/*
 
 RUN cd /tmp && \
